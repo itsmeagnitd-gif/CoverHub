@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <style>
-        /* Additional CSS for cart enhancements */
+        /* Additional CSS for cart page enhancements */
         .cart-progress {
             background: white;
             padding: 20px;
@@ -45,6 +45,11 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             margin-bottom: 30px;
+            display: none;
+        }
+        
+        .coupon-section.active {
+            display: block;
         }
         
         .coupon-input {
@@ -57,12 +62,13 @@
             flex: 1;
             padding: 12px 15px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             font-size: 1rem;
         }
         
-        .coupon-input button {
-            padding: 12px 25px;
+        .coupon-input input:focus {
+            outline: none;
+            border-color: var(--accent);
         }
         
         .gift-wrapping {
@@ -71,6 +77,11 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             margin-bottom: 30px;
+            display: none;
+        }
+        
+        .gift-wrapping.active {
+            display: block;
         }
         
         .gift-option {
@@ -89,9 +100,14 @@
             margin-top: 15px;
             padding: 15px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             font-size: 0.9rem;
             color: var(--gray);
+            display: none;
+        }
+        
+        .gift-note.active {
+            display: block;
         }
         
         .loyalty-points {
@@ -100,6 +116,11 @@
             padding: 20px;
             border-radius: var(--radius);
             margin-bottom: 30px;
+            display: none;
+        }
+        
+        .loyalty-points.active {
+            display: block;
         }
         
         .points-balance {
@@ -137,8 +158,10 @@
         .bundle-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: start;
             margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .bundle-products {
@@ -152,7 +175,12 @@
             text-align: center;
             padding: 10px;
             border: 1px solid #eee;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        
+        .bundle-product-item:hover {
+            border-color: var(--accent);
         }
         
         .bundle-product-item img {
@@ -164,7 +192,7 @@
         }
         
         .stock-warning {
-            color: #f44336;
+            color: var(--danger);
             font-size: 0.85rem;
             margin-top: 5px;
             display: flex;
@@ -176,6 +204,7 @@
             display: flex;
             gap: 10px;
             margin-top: 10px;
+            flex-wrap: wrap;
         }
         
         .save-for-later {
@@ -183,7 +212,7 @@
             border: 1px solid #ddd;
             color: var(--dark);
             padding: 8px 15px;
-            border-radius: 6px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             font-size: 0.9rem;
             display: flex;
@@ -194,11 +223,72 @@
         
         .save-for-later:hover {
             background: #e9ecef;
+            border-color: var(--accent);
+            color: var(--accent);
         }
         
         .gift-icon {
             color: var(--primary);
             margin-left: 10px;
+        }
+        
+        #couponMessage, #pointsMessage {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+        }
+        
+        #couponMessage.success, #pointsMessage.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        #couponMessage.error, #pointsMessage.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .empty-cart-illustration {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            .cart-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .cart-item-image {
+                margin: 0 auto;
+            }
+            
+            .cart-item-actions {
+                justify-content: center;
+            }
+            
+            .bundle-header {
+                flex-direction: column;
+            }
+            
+            .coupon-input, .use-points {
+                flex-direction: column;
+            }
+            
+            .coupon-input input, .use-points input {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -223,8 +313,8 @@
                 
                 <div class="nav-actions">
                     <div class="search-bar">
-                        <input type="text" placeholder="Search products...">
-                        <button><i class="fas fa-search"></i></button>
+                        <input type="text" id="searchInput" placeholder="Search products...">
+                        <button id="searchButton"><i class="fas fa-search"></i></button>
                     </div>
                     
                     <!-- Wishlist Icon -->
@@ -264,7 +354,7 @@
                 </div>
                 <div class="progress-text">
                     <span id="progressText">Add $50.00 more for free shipping!</span>
-                    <span>$0.00 / $50.00</span>
+                    <span id="progressAmount">$0.00 / $50.00</span>
                 </div>
             </div>
             
@@ -274,17 +364,17 @@
             </div>
             
             <!-- Coupon Section -->
-            <div class="coupon-section" id="couponSection" style="display: none;">
+            <div class="coupon-section" id="couponSection">
                 <h3>Have a coupon code?</h3>
                 <div class="coupon-input">
                     <input type="text" id="couponCode" placeholder="Enter coupon code">
                     <button class="btn" id="applyCouponBtn">Apply</button>
                 </div>
-                <div id="couponMessage" style="margin-top: 10px;"></div>
+                <div id="couponMessage"></div>
             </div>
             
             <!-- Gift Wrapping -->
-            <div class="gift-wrapping" id="giftWrappingSection" style="display: none;">
+            <div class="gift-wrapping" id="giftWrappingSection">
                 <h3>Gift Options</h3>
                 <div class="gift-option">
                     <input type="checkbox" id="giftWrapCheckbox">
@@ -295,21 +385,21 @@
                         </div>
                     </label>
                 </div>
-                <div class="gift-note" id="giftNote" style="display: none;">
-                    <textarea placeholder="Add a gift message (optional)" rows="3" style="width: 100%; border: none; background: transparent; resize: vertical;"></textarea>
+                <div class="gift-note" id="giftNote">
+                    <textarea placeholder="Add a gift message (optional)" rows="3" style="width: 100%; border: none; background: transparent; resize: vertical; font-family: inherit; padding: 10px;"></textarea>
                 </div>
             </div>
             
             <!-- Loyalty Points -->
-            <div class="loyalty-points" id="loyaltySection" style="display: none;">
-                <h3 style="color: white;">Your Loyalty Points</h3>
+            <div class="loyalty-points" id="loyaltySection">
+                <h3 style="color: white; margin-top: 0;">Your Loyalty Points</h3>
                 <div class="points-balance" id="pointsBalance">0</div>
-                <p style="opacity: 0.9;">Earn 10 points for every $1 spent</p>
+                <p style="opacity: 0.9; margin-bottom: 15px;">Earn 10 points for every $1 spent</p>
                 <div class="use-points">
                     <input type="number" id="usePoints" min="0" placeholder="Points to use">
                     <button class="btn" id="applyPointsBtn">Use Points</button>
                 </div>
-                <div id="pointsMessage" style="margin-top: 10px; font-size: 0.9rem;"></div>
+                <div id="pointsMessage"></div>
             </div>
             
             <!-- Suggested Bundles -->
@@ -372,23 +462,27 @@
     </footer>
 
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/15551234567" class="whatsapp-btn" target="_blank">
+    <a href="https://wa.me/15551234567" class="whatsapp-btn" target="_blank" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- JavaScript Files -->
     <script src="product.js"></script>
     <script src="cart.js"></script>
+    
+    <!-- Cart Page Specific JavaScript -->
     <script>
         // Mobile Navigation Toggle
-        const mobileToggle = document.getElementById('mobileToggle');
-        const navLinks = document.getElementById('navLinks');
-        
-        mobileToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-        
-        // Load cart when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.getElementById('mobileToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (mobileToggle && navLinks) {
+                mobileToggle.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                });
+            }
+            
             // Check admin login status
             const isAdminLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
             const adminLink = document.getElementById('adminLink');
@@ -399,7 +493,7 @@
                 adminNavLink.style.display = 'block';
             }
             
-            // Load cart functionality
+            // Load cart when page loads
             if (window.loadCart) {
                 window.loadCart();
             }
@@ -420,7 +514,11 @@
             if (giftWrapCheckbox) {
                 giftWrapCheckbox.addEventListener('change', function() {
                     const giftNote = document.getElementById('giftNote');
-                    giftNote.style.display = this.checked ? 'block' : 'none';
+                    if (this.checked) {
+                        giftNote.classList.add('active');
+                    } else {
+                        giftNote.classList.remove('active');
+                    }
                     
                     // Update cart with gift wrapping
                     const cart = JSON.parse(localStorage.getItem('coverlyCart')) || [];
@@ -429,6 +527,7 @@
                     });
                     localStorage.setItem('coverlyCart', JSON.stringify(cart));
                     
+                    // Reload cart to update totals
                     if (window.loadCart) {
                         window.loadCart();
                     }
@@ -446,16 +545,24 @@
             
             // Load suggested bundles
             loadSuggestedBundles();
-        });
-        
-        // Search functionality
-        const searchInput = document.querySelector('.search-bar input');
-        searchInput.addEventListener('keyup', function(e) {
-            if (e.key === 'Enter') {
-                const query = this.value.toLowerCase();
-                if (query) {
-                    alert(`Searching for: ${query}\nIn a real implementation, this would filter products.`);
-                }
+            
+            // Setup search functionality
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            
+            if (searchInput && searchButton) {
+                searchButton.addEventListener('click', function() {
+                    const query = searchInput.value.toLowerCase().trim();
+                    if (query) {
+                        alert(`Searching for: ${query}\nThis would search products in a real implementation.`);
+                    }
+                });
+                
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchButton.click();
+                    }
+                });
             }
         });
         
@@ -466,32 +573,46 @@
             
             if (!couponCode) {
                 couponMessage.innerHTML = '<span style="color: #f44336;">Please enter a coupon code</span>';
+                couponMessage.className = 'error';
                 return;
             }
             
             // Simulated coupon codes
             const validCoupons = {
-                'COVERLY10': 10,
-                'SAVE20': 20,
-                'WELCOME15': 15,
-                'FREESHIP': 'free-shipping'
+                'COVERLY10': { type: 'percent', value: 10 },
+                'SAVE20': { type: 'fixed', value: 20 },
+                'WELCOME15': { type: 'percent', value: 15 },
+                'FREESHIP': { type: 'shipping', value: 'free' }
             };
             
-            if (validCoupons[couponCode.toUpperCase()]) {
-                const discount = validCoupons[couponCode.toUpperCase()];
+            const coupon = validCoupons[couponCode.toUpperCase()];
+            
+            if (coupon) {
                 localStorage.setItem('activeCoupon', JSON.stringify({
                     code: couponCode.toUpperCase(),
-                    discount: discount
+                    type: coupon.type,
+                    value: coupon.value
                 }));
                 
-                couponMessage.innerHTML = `<span style="color: #4CAF50;">Coupon applied successfully! ${typeof discount === 'number' ? `$${discount} off` : 'Free shipping activated!'}</span>`;
+                let message = `Coupon "${couponCode.toUpperCase()}" applied successfully! `;
+                if (coupon.type === 'percent') {
+                    message += `${coupon.value}% off your order.`;
+                } else if (coupon.type === 'fixed') {
+                    message += `$${coupon.value} off your order.`;
+                } else {
+                    message += 'Free shipping activated!';
+                }
+                
+                couponMessage.innerHTML = `<span style="color: #4CAF50;">${message}</span>`;
+                couponMessage.className = 'success';
                 
                 // Reload cart to apply discount
                 if (window.loadCart) {
                     window.loadCart();
                 }
             } else {
-                couponMessage.innerHTML = '<span style="color: #f44336;">Invalid coupon code</span>';
+                couponMessage.innerHTML = '<span style="color: #f44336;">Invalid coupon code. Try COVERLY10, SAVE20, WELCOME15, or FREESHIP</span>';
+                couponMessage.className = 'error';
             }
         }
         
@@ -503,6 +624,16 @@
             
             if (!pointsToUse || pointsToUse <= 0) {
                 pointsMessage.innerHTML = '<span style="color: #f44336;">Please enter valid points</span>';
+                pointsMessage.className = 'error';
+                return;
+            }
+            
+            // Get user's available points
+            const userPoints = parseInt(document.getElementById('pointsBalance').textContent.replace(/,/g, ''));
+            
+            if (pointsToUse > userPoints) {
+                pointsMessage.innerHTML = `<span style="color: #f44336;">You only have ${userPoints.toLocaleString()} points available</span>`;
+                pointsMessage.className = 'error';
                 return;
             }
             
@@ -515,7 +646,8 @@
                 discount: discountAmount
             }));
             
-            pointsMessage.innerHTML = `<span style="color: #4CAF50;">${pointsToUse} points applied! You get $${discountAmount.toFixed(2)} off.</span>`;
+            pointsMessage.innerHTML = `<span style="color: #4CAF50;">${pointsToUse.toLocaleString()} points applied! You get $${discountAmount.toFixed(2)} off.</span>`;
+            pointsMessage.className = 'success';
             
             // Reload cart to apply discount
             if (window.loadCart) {
@@ -525,8 +657,8 @@
         
         // Update loyalty points display
         function updateLoyaltyPoints() {
-            // Simulated loyalty points
-            const userPoints = 1500; // In real app, get from user account
+            // Simulated loyalty points - in real app, get from user account
+            const userPoints = 1500;
             const pointsBalance = document.getElementById('pointsBalance');
             const loyaltySection = document.getElementById('loyaltySection');
             
@@ -535,7 +667,7 @@
             }
             
             if (loyaltySection && userPoints > 0) {
-                loyaltySection.style.display = 'block';
+                loyaltySection.classList.add('active');
             }
         }
         
@@ -568,24 +700,26 @@
                 bundlesHTML += `
                     <div class="product-bundle">
                         <div class="bundle-header">
-                            <h3>${bundle.name}</h3>
+                            <div>
+                                <h3 style="margin: 0 0 10px 0;">${bundle.name}</h3>
+                                <p style="color: var(--gray); margin: 0;">${bundle.description || 'Special bundle offer!'}</p>
+                            </div>
                             <div style="text-align: right;">
-                                <div style="text-decoration: line-through; color: var(--gray);">$${bundle.originalPrice.toFixed(2)}</div>
-                                <div style="font-size: 1.5rem; color: var(--accent); font-weight: bold;">$${bundle.price.toFixed(2)}</div>
-                                <div style="color: #4CAF50; font-size: 0.9rem;">Save ${bundle.discount}%</div>
+                                <div style="text-decoration: line-through; color: var(--gray); font-size: 1.1rem;">$${bundle.originalPrice.toFixed(2)}</div>
+                                <div style="font-size: 1.8rem; color: var(--accent); font-weight: bold; margin: 5px 0;">$${bundle.price.toFixed(2)}</div>
+                                <div style="color: #4CAF50; font-size: 0.9rem; font-weight: bold;">Save ${bundle.discount}% ($${(bundle.originalPrice - bundle.price).toFixed(2)})</div>
                             </div>
                         </div>
-                        <p>${bundle.description || 'Special bundle offer!'}</p>
                         <div class="bundle-products">
                             ${bundleProducts.map(product => `
                                 <div class="bundle-product-item">
                                     <img src="${product.image}" alt="${product.name}">
-                                    <div style="font-size: 0.85rem; font-weight: 500;">${product.name}</div>
-                                    <div style="color: var(--accent); font-size: 0.9rem;">$${product.price.toFixed(2)}</div>
+                                    <div style="font-size: 0.85rem; font-weight: 500; margin-bottom: 5px;">${product.name}</div>
+                                    <div style="color: var(--accent); font-size: 0.9rem; font-weight: bold;">$${product.price.toFixed(2)}</div>
                                 </div>
                             `).join('')}
                         </div>
-                        <button class="btn" onclick="addBundleToCart(${bundle.id})" style="margin-top: 15px; width: 100%;">
+                        <button class="btn btn-primary" onclick="addBundleToCart(${bundle.id})" style="margin-top: 20px; width: 100%;">
                             <i class="fas fa-plus"></i> Add Bundle to Cart
                         </button>
                     </div>
@@ -606,14 +740,76 @@
                     window.addToCart(productId);
                 });
                 
-                alert(`Bundle "${bundle.name}" added to cart! You saved $${(bundle.originalPrice - bundle.price).toFixed(2)}`);
+                // Show success message
+                if (window.showNotification) {
+                    window.showNotification(`Bundle "${bundle.name}" added to cart! You saved $${(bundle.originalPrice - bundle.price).toFixed(2)}`);
+                } else {
+                    alert(`Bundle "${bundle.name}" added to cart! You saved $${(bundle.originalPrice - bundle.price).toFixed(2)}`);
+                }
                 
                 // Reload cart
                 if (window.loadCart) {
                     window.loadCart();
                 }
+                
+                // Reload suggested bundles
+                loadSuggestedBundles();
             }
         }
+        
+        // Function to show/hide cart sections based on cart content
+        function updateCartSectionsVisibility() {
+            const cart = JSON.parse(localStorage.getItem('coverlyCart')) || [];
+            const couponSection = document.getElementById('couponSection');
+            const giftWrappingSection = document.getElementById('giftWrappingSection');
+            
+            if (cart.length > 0) {
+                if (couponSection) couponSection.classList.add('active');
+                if (giftWrappingSection) giftWrappingSection.classList.add('active');
+            } else {
+                if (couponSection) couponSection.classList.remove('active');
+                if (giftWrappingSection) giftWrappingSection.classList.remove('active');
+            }
+        }
+        
+        // Override window.loadCart to include our custom logic
+        const originalLoadCart = window.loadCart;
+        window.loadCart = function() {
+            if (originalLoadCart) {
+                originalLoadCart();
+            }
+            updateCartSectionsVisibility();
+            updateShippingProgress();
+        };
+        
+        // Update free shipping progress
+        function updateShippingProgress() {
+            const progressFill = document.getElementById('shippingProgress');
+            const progressText = document.getElementById('progressText');
+            const progressAmount = document.getElementById('progressAmount');
+            
+            if (!progressFill || !progressText || !progressAmount) return;
+            
+            const cart = JSON.parse(localStorage.getItem('coverlyCart')) || [];
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const freeShippingThreshold = 50;
+            const progress = Math.min((subtotal / freeShippingThreshold) * 100, 100);
+            
+            progressFill.style.width = `${progress}%`;
+            progressAmount.textContent = `$${subtotal.toFixed(2)} / $${freeShippingThreshold.toFixed(2)}`;
+            
+            if (subtotal >= freeShippingThreshold) {
+                progressText.textContent = '🎉 Congratulations! You get free shipping!';
+                progressText.style.color = '#4CAF50';
+            } else {
+                const amountNeeded = (freeShippingThreshold - subtotal).toFixed(2);
+                progressText.textContent = `Add $${amountNeeded} more for free shipping!`;
+                progressText.style.color = '';
+            }
+        }
+        
+        // Initialize shipping progress on page load
+        window.addEventListener('load', updateShippingProgress);
     </script>
 </body>
     </html>
