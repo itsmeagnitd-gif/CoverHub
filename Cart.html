@@ -7,6 +7,200 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* Additional CSS for cart enhancements */
+        .cart-progress {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .coupon-section {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .coupon-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .coupon-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .coupon-input button {
+            padding: 12px 25px;
+        }
+        
+        .gift-wrapping {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .gift-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .gift-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .gift-note {
+            margin-top: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .loyalty-points {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+        }
+        
+        .points-balance {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .use-points {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .use-points input {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            width: 100px;
+        }
+        
+        .suggested-products {
+            margin-top: 40px;
+        }
+        
+        .product-bundle {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        
+        .bundle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .bundle-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .bundle-product-item {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        
+        .bundle-product-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .stock-warning {
+            color: #f44336;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .save-for-later {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            color: var(--dark);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+        
+        .save-for-later:hover {
+            background: #e9ecef;
+        }
+        
+        .gift-icon {
+            color: var(--primary);
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -23,6 +217,8 @@
                     <a href="cover.html">Covers</a>
                     <a href="accessories.html">Accessories</a>
                     <a href="cart.html" class="active">Cart</a>
+                    <a href="wishlist.html">Wishlist</a>
+                    <a href="admin.html" id="adminNavLink" style="display: none;">Admin</a>
                 </div>
                 
                 <div class="nav-actions">
@@ -31,9 +227,20 @@
                         <button><i class="fas fa-search"></i></button>
                     </div>
                     
+                    <!-- Wishlist Icon -->
+                    <a href="wishlist.html" class="wishlist-icon" style="position: relative; margin-right: 15px; color: var(--dark); text-decoration: none;">
+                        <i class="far fa-heart"></i>
+                        <span class="wishlist-count" style="position: absolute; top: -8px; right: -8px; background-color: var(--primary); color: white; font-size: 0.8rem; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">0</span>
+                    </a>
+                    
                     <a href="cart.html" class="cart-icon">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count">0</span>
+                    </a>
+                    
+                    <!-- Admin Link -->
+                    <a href="admin.html" class="admin-link" id="adminLink" style="display: none; margin-left: 15px; color: var(--accent);">
+                        <i class="fas fa-cog"></i>
                     </a>
                     
                     <div class="mobile-toggle" id="mobileToggle">
@@ -49,8 +256,65 @@
         <div class="cart-container">
             <h1 class="cart-title">Your Shopping Cart</h1>
             
+            <!-- Free Shipping Progress -->
+            <div class="cart-progress">
+                <h3 style="margin-bottom: 10px;">Free Shipping Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="shippingProgress" style="width: 0%"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="progressText">Add $50.00 more for free shipping!</span>
+                    <span>$0.00 / $50.00</span>
+                </div>
+            </div>
+            
+            <!-- Main Cart Content -->
             <div id="cartContent">
                 <!-- Cart items will be loaded by JavaScript -->
+            </div>
+            
+            <!-- Coupon Section -->
+            <div class="coupon-section" id="couponSection" style="display: none;">
+                <h3>Have a coupon code?</h3>
+                <div class="coupon-input">
+                    <input type="text" id="couponCode" placeholder="Enter coupon code">
+                    <button class="btn" id="applyCouponBtn">Apply</button>
+                </div>
+                <div id="couponMessage" style="margin-top: 10px;"></div>
+            </div>
+            
+            <!-- Gift Wrapping -->
+            <div class="gift-wrapping" id="giftWrappingSection" style="display: none;">
+                <h3>Gift Options</h3>
+                <div class="gift-option">
+                    <input type="checkbox" id="giftWrapCheckbox">
+                    <label for="giftWrapCheckbox" style="flex: 1;">
+                        <strong>Add Gift Wrapping</strong>
+                        <div style="color: var(--gray); font-size: 0.9rem; margin-top: 5px;">
+                            Beautiful gift wrapping with premium packaging. (+$4.99)
+                        </div>
+                    </label>
+                </div>
+                <div class="gift-note" id="giftNote" style="display: none;">
+                    <textarea placeholder="Add a gift message (optional)" rows="3" style="width: 100%; border: none; background: transparent; resize: vertical;"></textarea>
+                </div>
+            </div>
+            
+            <!-- Loyalty Points -->
+            <div class="loyalty-points" id="loyaltySection" style="display: none;">
+                <h3 style="color: white;">Your Loyalty Points</h3>
+                <div class="points-balance" id="pointsBalance">0</div>
+                <p style="opacity: 0.9;">Earn 10 points for every $1 spent</p>
+                <div class="use-points">
+                    <input type="number" id="usePoints" min="0" placeholder="Points to use">
+                    <button class="btn" id="applyPointsBtn">Use Points</button>
+                </div>
+                <div id="pointsMessage" style="margin-top: 10px; font-size: 0.9rem;"></div>
+            </div>
+            
+            <!-- Suggested Bundles -->
+            <div class="suggested-products" id="suggestedBundles">
+                <!-- Suggested bundles will be loaded here -->
             </div>
         </div>
     </section>
@@ -77,6 +341,7 @@
                         <li><a href="cover.html">Phone Covers</a></li>
                         <li><a href="accessories.html">Accessories</a></li>
                         <li><a href="cart.html">Shopping Cart</a></li>
+                        <li><a href="wishlist.html">My Wishlist</a></li>
                     </ul>
                 </div>
                 
@@ -86,6 +351,17 @@
                     <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
                     <p><i class="fas fa-envelope"></i> support@coverly.com</p>
                     <p><i class="fas fa-clock"></i> Mon-Sat: 9AM - 8PM</p>
+                </div>
+                
+                <div class="footer-info">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
                 </div>
             </div>
             
@@ -100,6 +376,7 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <script src="product.js"></script>
     <script src="cart.js"></script>
     <script>
         // Mobile Navigation Toggle
@@ -112,8 +389,63 @@
         
         // Load cart when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            loadCart();
-            updateCartCount();
+            // Check admin login status
+            const isAdminLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+            const adminLink = document.getElementById('adminLink');
+            const adminNavLink = document.getElementById('adminNavLink');
+            
+            if (isAdminLoggedIn && adminLink && adminNavLink) {
+                adminLink.style.display = 'block';
+                adminNavLink.style.display = 'block';
+            }
+            
+            // Load cart functionality
+            if (window.loadCart) {
+                window.loadCart();
+            }
+            
+            // Load wishlist count
+            if (window.updateWishlistCount) {
+                window.updateWishlistCount();
+            }
+            
+            // Setup coupon functionality
+            const applyCouponBtn = document.getElementById('applyCouponBtn');
+            if (applyCouponBtn) {
+                applyCouponBtn.addEventListener('click', applyCoupon);
+            }
+            
+            // Setup gift wrapping
+            const giftWrapCheckbox = document.getElementById('giftWrapCheckbox');
+            if (giftWrapCheckbox) {
+                giftWrapCheckbox.addEventListener('change', function() {
+                    const giftNote = document.getElementById('giftNote');
+                    giftNote.style.display = this.checked ? 'block' : 'none';
+                    
+                    // Update cart with gift wrapping
+                    const cart = JSON.parse(localStorage.getItem('coverlyCart')) || [];
+                    cart.forEach(item => {
+                        item.giftWrapping = this.checked;
+                    });
+                    localStorage.setItem('coverlyCart', JSON.stringify(cart));
+                    
+                    if (window.loadCart) {
+                        window.loadCart();
+                    }
+                });
+            }
+            
+            // Setup loyalty points
+            const applyPointsBtn = document.getElementById('applyPointsBtn');
+            if (applyPointsBtn) {
+                applyPointsBtn.addEventListener('click', applyLoyaltyPoints);
+            }
+            
+            // Load loyalty points
+            updateLoyaltyPoints();
+            
+            // Load suggested bundles
+            loadSuggestedBundles();
         });
         
         // Search functionality
@@ -121,9 +453,167 @@
         searchInput.addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
                 const query = this.value.toLowerCase();
-                alert(`Searching for: ${query}\nIn a real implementation, this would filter products.`);
+                if (query) {
+                    alert(`Searching for: ${query}\nIn a real implementation, this would filter products.`);
+                }
             }
         });
+        
+        // Apply coupon
+        function applyCoupon() {
+            const couponCode = document.getElementById('couponCode').value.trim();
+            const couponMessage = document.getElementById('couponMessage');
+            
+            if (!couponCode) {
+                couponMessage.innerHTML = '<span style="color: #f44336;">Please enter a coupon code</span>';
+                return;
+            }
+            
+            // Simulated coupon codes
+            const validCoupons = {
+                'COVERLY10': 10,
+                'SAVE20': 20,
+                'WELCOME15': 15,
+                'FREESHIP': 'free-shipping'
+            };
+            
+            if (validCoupons[couponCode.toUpperCase()]) {
+                const discount = validCoupons[couponCode.toUpperCase()];
+                localStorage.setItem('activeCoupon', JSON.stringify({
+                    code: couponCode.toUpperCase(),
+                    discount: discount
+                }));
+                
+                couponMessage.innerHTML = `<span style="color: #4CAF50;">Coupon applied successfully! ${typeof discount === 'number' ? `$${discount} off` : 'Free shipping activated!'}</span>`;
+                
+                // Reload cart to apply discount
+                if (window.loadCart) {
+                    window.loadCart();
+                }
+            } else {
+                couponMessage.innerHTML = '<span style="color: #f44336;">Invalid coupon code</span>';
+            }
+        }
+        
+        // Apply loyalty points
+        function applyLoyaltyPoints() {
+            const pointsInput = document.getElementById('usePoints');
+            const pointsToUse = parseInt(pointsInput.value);
+            const pointsMessage = document.getElementById('pointsMessage');
+            
+            if (!pointsToUse || pointsToUse <= 0) {
+                pointsMessage.innerHTML = '<span style="color: #f44336;">Please enter valid points</span>';
+                return;
+            }
+            
+            const loyaltySettings = JSON.parse(localStorage.getItem('coverlyLoyaltySettings') || '{}');
+            const pointsValue = loyaltySettings.pointsValue || 1.00;
+            const discountAmount = (pointsToUse / 100) * pointsValue;
+            
+            localStorage.setItem('usedLoyaltyPoints', JSON.stringify({
+                points: pointsToUse,
+                discount: discountAmount
+            }));
+            
+            pointsMessage.innerHTML = `<span style="color: #4CAF50;">${pointsToUse} points applied! You get $${discountAmount.toFixed(2)} off.</span>`;
+            
+            // Reload cart to apply discount
+            if (window.loadCart) {
+                window.loadCart();
+            }
+        }
+        
+        // Update loyalty points display
+        function updateLoyaltyPoints() {
+            // Simulated loyalty points
+            const userPoints = 1500; // In real app, get from user account
+            const pointsBalance = document.getElementById('pointsBalance');
+            const loyaltySection = document.getElementById('loyaltySection');
+            
+            if (pointsBalance) {
+                pointsBalance.textContent = userPoints.toLocaleString();
+            }
+            
+            if (loyaltySection && userPoints > 0) {
+                loyaltySection.style.display = 'block';
+            }
+        }
+        
+        // Load suggested bundles
+        function loadSuggestedBundles() {
+            const bundles = JSON.parse(localStorage.getItem('coverlyBundles') || '[]');
+            const suggestedBundles = document.getElementById('suggestedBundles');
+            
+            if (!suggestedBundles || bundles.length === 0) return;
+            
+            // Get current cart items
+            const cart = JSON.parse(localStorage.getItem('coverlyCart')) || [];
+            const cartProductIds = cart.map(item => item.id);
+            
+            // Find bundles that include products from cart
+            const relevantBundles = bundles.filter(bundle => {
+                return bundle.products.some(productId => cartProductIds.includes(productId));
+            }).slice(0, 2); // Show max 2 bundles
+            
+            if (relevantBundles.length === 0) return;
+            
+            let bundlesHTML = '<h2 class="section-title">Complete Your Set</h2>';
+            bundlesHTML += '<p class="section-subtitle">Add these bundles to save even more!</p>';
+            
+            relevantBundles.forEach(bundle => {
+                const bundleProducts = bundle.products.map(id => 
+                    window.products.find(p => p.id === id)
+                ).filter(p => p);
+                
+                bundlesHTML += `
+                    <div class="product-bundle">
+                        <div class="bundle-header">
+                            <h3>${bundle.name}</h3>
+                            <div style="text-align: right;">
+                                <div style="text-decoration: line-through; color: var(--gray);">$${bundle.originalPrice.toFixed(2)}</div>
+                                <div style="font-size: 1.5rem; color: var(--accent); font-weight: bold;">$${bundle.price.toFixed(2)}</div>
+                                <div style="color: #4CAF50; font-size: 0.9rem;">Save ${bundle.discount}%</div>
+                            </div>
+                        </div>
+                        <p>${bundle.description || 'Special bundle offer!'}</p>
+                        <div class="bundle-products">
+                            ${bundleProducts.map(product => `
+                                <div class="bundle-product-item">
+                                    <img src="${product.image}" alt="${product.name}">
+                                    <div style="font-size: 0.85rem; font-weight: 500;">${product.name}</div>
+                                    <div style="color: var(--accent); font-size: 0.9rem;">$${product.price.toFixed(2)}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button class="btn" onclick="addBundleToCart(${bundle.id})" style="margin-top: 15px; width: 100%;">
+                            <i class="fas fa-plus"></i> Add Bundle to Cart
+                        </button>
+                    </div>
+                `;
+            });
+            
+            suggestedBundles.innerHTML = bundlesHTML;
+        }
+        
+        // Add bundle to cart
+        function addBundleToCart(bundleId) {
+            const bundles = JSON.parse(localStorage.getItem('coverlyBundles') || '[]');
+            const bundle = bundles.find(b => b.id === bundleId);
+            
+            if (bundle && window.addToCart) {
+                // Add each product in the bundle to cart
+                bundle.products.forEach(productId => {
+                    window.addToCart(productId);
+                });
+                
+                alert(`Bundle "${bundle.name}" added to cart! You saved $${(bundle.originalPrice - bundle.price).toFixed(2)}`);
+                
+                // Reload cart
+                if (window.loadCart) {
+                    window.loadCart();
+                }
+            }
+        }
     </script>
 </body>
-  </html>
+    </html>
