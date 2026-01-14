@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coverly - Premium Phone Accessories</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">C</div>
+                    <span>Coverly</span>
+                </a>
+                
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="active">Home</a>
+                    <a href="cover.html">Covers</a>
+                    <a href="accessories.html">Accessories</a>
+                    <a href="cart.html">Cart</a>
+                </div>
+                
+                <div class="nav-actions">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search products...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                    
+                    <div class="mobile-toggle" id="mobileToggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Slideshow -->
+    <section class="hero">
+        <div class="container">
+            <div class="slideshow">
+                <div class="slide active" style="background-image: linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0.7)), url('https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="slide-content">
+                        <h2>Premium Leather Phone Covers</h2>
+                        <p>Protect your device in style with our handcrafted leather covers</p>
+                        <div class="discount">30% OFF</div>
+                        <div class="price">$24.99</div>
+                        <a href="cover.html" class="btn">Shop Now</a>
+                    </div>
+                </div>
+                
+                <div class="slide" style="background-image: linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0.7)), url('https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="slide-content">
+                        <h2>Fast Wireless Chargers</h2>
+                        <p>Charge your phone wirelessly at lightning speed</p>
+                        <div class="discount">25% OFF</div>
+                        <div class="price">$34.99</div>
+                        <a href="accessories.html" class="btn">Shop Now</a>
+                    </div>
+                </div>
+                
+                <div class="slide" style="background-image: linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0.7)), url('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="slide-content">
+                        <h2>Noise Cancelling Earbuds</h2>
+                        <p>Immerse yourself in crystal clear sound</p>
+                        <div class="discount">20% OFF</div>
+                        <div class="price">$49.99</div>
+                        <a href="accessories.html" class="btn">Shop Now</a>
+                    </div>
+                </div>
+                
+                <div class="prev-slide" id="prevSlide">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="next-slide" id="nextSlide">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                
+                <div class="slideshow-controls">
+                    <span class="slide-indicator active" data-slide="0"></span>
+                    <span class="slide-indicator" data-slide="1"></span>
+                    <span class="slide-indicator" data-slide="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="container">
+        <h2 class="section-title">Best Sellers</h2>
+        <p class="section-subtitle">Discover our most popular phone accessories loved by thousands of customers</p>
+        
+        <div class="products-grid" id="bestSellers">
+            <!-- Best seller products will be loaded by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title" style="color: var(--dark);">What Our Customers Say</h2>
+            
+            <div class="testimonials-slider">
+                <div class="testimonial active">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"The quality of Coverly's phone cases is exceptional. I've dropped my phone multiple times and the case has protected it perfectly. Highly recommend!"</p>
+                    <p class="testimonial-author">- Sarah Johnson</p>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">"Fast delivery and amazing customer service. The wireless charger I bought works flawlessly and looks great on my desk."</p>
+                    <p class="testimonial-author">- Michael Chen</p>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Best earbuds I've ever owned! The noise cancellation is incredible and battery life lasts all day. Worth every penny!"</p>
+                    <p class="testimonial-author">- Emma Rodriguez</p>
+                </div>
+                
+                <div class="testimonial-controls">
+                    <span class="testimonial-indicator active" data-testimonial="0"></span>
+                    <span class="testimonial-indicator" data-testimonial="1"></span>
+                    <span class="testimonial-indicator" data-testimonial="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">Coverly<span>.</span></div>
+                    <p>Coverly is your one-stop shop for premium phone accessories. We offer high-quality products that combine style, protection, and functionality for your mobile devices.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="cover.html">Phone Covers</a></li>
+                        <li><a href="accessories.html">Accessories</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Tech Street, San Francisco, CA</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> support@coverly.com</p>
+                    <p><i class="fas fa-clock"></i> Mon-Sat: 9AM - 8PM</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Coverly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/15551234567" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Product Detail Modal -->
+    <div class="modal-overlay" id="productModal">
+        <div class="product-modal">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="modal-content" id="modalContent">
+                <!-- Product details will be loaded by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="product.js"></script>
+    <script src="cart.js"></script>
+    <script>
+        // Mobile Navigation Toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Slideshow Functionality
+        const slides = document.querySelectorAll('.slide');
+        const slideIndicators = document.querySelectorAll('.slide-indicator');
+        const prevSlideBtn = document.getElementById('prevSlide');
+        const nextSlideBtn = document.getElementById('nextSlide');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slideIndicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            if (index >= slides.length) currentSlide = 0;
+            if (index < 0) currentSlide = slides.length - 1;
+            
+            slides[currentSlide].classList.add('active');
+            slideIndicators[currentSlide].classList.add('active');
+        }
+        
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+        
+        function prevSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+        
+        prevSlideBtn.addEventListener('click', prevSlide);
+        nextSlideBtn.addEventListener('click', nextSlide);
+        
+        slideIndicators.forEach(indicator => {
+            indicator.addEventListener('click', () => {
+                currentSlide = parseInt(indicator.getAttribute('data-slide'));
+                showSlide(currentSlide);
+            });
+        });
+        
+        // Auto advance slides
+        let slideInterval = setInterval(nextSlide, 5000);
+        
+        // Pause auto advance on hover
+        const slideshow = document.querySelector('.slideshow');
+        slideshow.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        slideshow.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+        
+        // Testimonials Slider
+        const testimonials = document.querySelectorAll('.testimonial');
+        const testimonialIndicators = document.querySelectorAll('.testimonial-indicator');
+        let currentTestimonial = 0;
+        
+        function showTestimonial(index) {
+            testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+            testimonialIndicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            if (index >= testimonials.length) currentTestimonial = 0;
+            if (index < 0) currentTestimonial = testimonials.length - 1;
+            
+            testimonials[currentTestimonial].classList.add('active');
+            testimonialIndicators[currentTestimonial].classList.add('active');
+        }
+        
+        testimonialIndicators.forEach(indicator => {
+            indicator.addEventListener('click', () => {
+                currentTestimonial = parseInt(indicator.getAttribute('data-testimonial'));
+                showTestimonial(currentTestimonial);
+            });
+        });
+        
+        // Auto advance testimonials
+        setInterval(() => {
+            currentTestimonial++;
+            showTestimonial(currentTestimonial);
+        }, 7000);
+        
+        // Search functionality
+        const searchInput = document.querySelector('.search-bar input');
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.toLowerCase();
+                if (query) {
+                    alert(`Searching for: ${query}\nIn a real implementation, this would filter products.`);
+                }
+            }
+        });
+    </script>
+</body>
+  </html>
